@@ -101,7 +101,7 @@ function App() {
       <div className="w-full max-w-xl mt-6 flex flex-col items-center">
         <div className="flex w-full">
           <input
-            className="flex-1 px-4 py-3 rounded-l-2xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white/90 text-pink-900 placeholder:text-pink-500 placeholder:font-semibold placeholder:text-base"
+            className="flex-1 px-4 py-3 rounded-l-2xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white/90 text-pink-900 placeholder:text-pink-300 placeholder:font-normal placeholder:text-base"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
