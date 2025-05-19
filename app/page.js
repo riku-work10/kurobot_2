@@ -30,34 +30,36 @@ function App() {
 
   const [messages, setMessages] = useState([kurochanIntro]);
 
-const handleSend = async () => {
-  if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!input.trim()) return;
 
-  const userMsg = { role: 'user', content: input };
-  setMessages((prev) => [...prev, userMsg]);
-  setInput('');
+    const userMsg = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
 
-  try {
-    const res = await fetch('/api/kurochan', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: input, isDrunk: isDrunkMode }),
-    });
+    try {
+      const res = await fetch("/api/kurochan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input, isDrunk: isDrunkMode }),
+      });
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.error || 'API Error');
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "API Error");
+      }
+
+      const data = await res.json();
+      const botMsg = { role: "assistant", content: data.text };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (error) {
+      const errorMsg = {
+        role: "assistant",
+        content: `エラーが発生したしん: ${error.message}`,
+      };
+      setMessages((prev) => [...prev, errorMsg]);
     }
-
-    const data = await res.json();
-    const botMsg = { role: 'assistant', content: data.text };
-    setMessages((prev) => [...prev, botMsg]);
-  } catch (error) {
-    const errorMsg = { role: 'assistant', content: `エラーが発生したしん: ${error.message}` };
-    setMessages((prev) => [...prev, errorMsg]);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-pink-100 p-6 flex flex-col items-center font-sans">
@@ -99,7 +101,7 @@ const handleSend = async () => {
       <div className="w-full max-w-xl mt-6 flex flex-col items-center">
         <div className="flex w-full">
           <input
-            className="flex-1 px-4 py-3 rounded-l-2xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white/70 backdrop-blur-mdplaceholder-pink-500 placeholder-opacity-100 placeholder:text-base"
+            className="flex-1 px-4 py-3 rounded-l-2xl border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white/90 text-pink-900 placeholder:text-pink-500 placeholder:font-semibold placeholder:text-base"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
